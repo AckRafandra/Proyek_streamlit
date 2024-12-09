@@ -6,33 +6,40 @@ import numpy as np
 model = joblib.load('random_forest_model.pkl')
 
 # Title and description
-st.title("Payment Method Prediction")
-st.write("Masukkan data pelanggan untuk memprediksi metode pembayaran:")
+st.title("Prediksi Metode Pembayaran")
+st.write("""
+    Masukkan data pelanggan untuk memprediksi metode pembayaran yang paling sesuai.
+    Kami akan membantu Anda memahami pola perilaku pelanggan berdasarkan input yang diberikan.
+""")
 
-# Input fields
-gender = st.selectbox("Gender:", ["Male", "Female"])
-age = st.number_input("Age:", min_value=0, step=1)
+# Add an image to make it more attractive (you can replace with your own image URL or file)
+st.image("https://www.example.com/image.jpg", width=700)  # Replace with your image URL
+
+# Input fields with more detailed descriptions and styling
+st.subheader("Data Pelanggan")
+gender = st.selectbox("Pilih Jenis Kelamin:", ["Laki-laki", "Perempuan"])
+age = st.number_input("Usia (tahun):", min_value=0, step=1, format="%d")
 product_category = st.selectbox(
-    "Product Category:", ["Clothing", "Electronics", "Beauty"]
+    "Pilih Kategori Produk:", ["Pakaian", "Elektronik", "Kecantikan"]
 )
 city = st.selectbox(
-    "City:",
-    ["Jakarta", "Bandung", "Surabaya", "Medan", "Yogyakarta", "Denpasar", "Semarang"],
+    "Pilih Kota:", 
+    ["Jakarta", "Bandung", "Surabaya", "Medan", "Yogyakarta", "Denpasar", "Semarang"]
 )
-quantity = st.number_input("Quantity:", min_value=1, step=1)
-price_per_unit = st.number_input("Price per Unit:", min_value=0.0, step=0.01)
+quantity = st.number_input("Jumlah Barang:", min_value=1, step=1)
+price_per_unit = st.number_input("Harga per Unit (dalam Rupiah):", min_value=0.0, step=0.01)
 
-# Prediction button
-if st.button("Predict"):
+# Prediction button with a custom style
+if st.button("Prediksi Metode Pembayaran"):
     # Preprocess input
     features = np.array([[ 
         age,
         quantity,
         price_per_unit,
         quantity * price_per_unit,
-        1 if gender == "Male" else 0,
-        1 if product_category == "Clothing" else 0,
-        1 if product_category == "Electronics" else 0,
+        1 if gender == "Laki-laki" else 0,
+        1 if product_category == "Pakaian" else 0,
+        1 if product_category == "Elektronik" else 0,
         1 if city == "Denpasar" else 0,
         1 if city == "Jakarta" else 0,
         1 if city == "Makassar" else 0,
@@ -44,8 +51,12 @@ if st.button("Predict"):
 
     # Predict
     prediction = model.predict(features)[0]
-    payment_methods = {0: "Cash", 1: "E-wallet", 2: "Credit Card"}
+    payment_methods = {0: "Tunai", 1: "E-wallet", 2: "Kartu Kredit"}
     result = payment_methods[prediction]
 
-    # Display result
+    # Display result with a custom message
     st.success(f"Prediksi Metode Pembayaran: {result}")
+
+    # Display detailed price in Rupiah format
+    total_price = quantity * price_per_unit
+    st.write(f"Total Harga: **Rp {total_price:,.2f}**")
