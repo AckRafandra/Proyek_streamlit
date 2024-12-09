@@ -13,7 +13,7 @@ st.write("""
 """)
 
 # Add an image to make it more attractive (you can replace with your own image URL or file)
-st.image("https://www.example.com/image.jpg", width=700)  # Replace with your image URL
+st.image("https://wallpapers.com/images/high/japanese-anime-aesthetic-19r6zi160sm63okj.webp", width=700)  # Replace with your image URL
 
 # Input fields with more detailed descriptions and styling
 st.subheader("Data Pelanggan")
