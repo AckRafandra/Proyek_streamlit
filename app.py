@@ -18,7 +18,10 @@ st.image("https://wallpapers.com/images/high/japanese-anime-aesthetic-19r6zi160s
 # Input fields with more detailed descriptions and styling
 st.subheader("Data Pelanggan")
 gender = st.selectbox("Pilih Jenis Kelamin:", ["Laki-laki", "Perempuan"])
-age = st.number_input("Usia (tahun):", min_value=0, step=1, format="%d")
+
+# Batasan usia minimal 1 tahun dan maksimal 120 tahun
+age = st.number_input("Usia (tahun):", min_value=1, max_value=120, step=1, format="%d")
+
 product_category = st.selectbox(
     "Pilih Kategori Produk:", ["Pakaian", "Elektronik", "Kecantikan"]
 )
@@ -26,8 +29,12 @@ city = st.selectbox(
     "Pilih Kota:", 
     ["Jakarta", "Bandung", "Surabaya", "Medan", "Yogyakarta", "Denpasar", "Semarang"]
 )
+
+# Batasan harga minimal 500 dan maksimal 100 juta
 quantity = st.number_input("Jumlah Barang:", min_value=1, step=1)
-price_per_unit = st.number_input("Harga per Unit (dalam Rupiah):", min_value=0.0, step=0.01)
+
+# Mengubah batasan harga per unit menjadi minimal 500 dan maksimal 100 juta
+price_per_unit = st.number_input("Harga per Unit (dalam Rupiah):", min_value=500, max_value=100000000, step=500)
 
 # Prediction button with a custom style
 if st.button("Prediksi Metode Pembayaran"):
